@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Dream — Premium Event Planning</title>
+<meta name="description" content="My Dream crafts extraordinary weddings, celebrations and corporate events for international clients who expect nothing less than perfection.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --bg:#FAF7F2;
+  --bg-secondary:#F3EEE7;
+  --accent:#B58B58;
+  --accent-soft:#D9BD93;
+  --accent-gold:#E4C68A;
+  --text-dark:#2D2B2A;
+  --text-secondary:#7C756D;
+  --border:#E6DDD4;
+  --card:#FFFFFF;
+  --font-display:'Cormorant Garamond', serif;
+  --font-body:'Manrope', sans-serif;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --radius-arch: 200px 200px 0 0;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--text-dark);
+  font-family:var(--font-body);
+  font-size:16px;
+  line-height:1.6;
+  overflow-x:hidden;
+  cursor:default;
+}
+img{max-width:100%;display:block;}
+a{color:inherit;text-decoration:none;}
+ul{list-style:none;}
+button{font:inherit;background:none;border:none;cursor:pointer;color:inherit;}
+input,select,textarea{font:inherit;}
+.section-inner{max-width:1240px;margin:0 auto;padding:0 32px;}
+
+h1,h2,h3,h4{font-family:var(--font-display);font-weight:500;letter-spacing:.01em;color:var(--text-dark);}
+h2{font-size:clamp(2.1rem,3.6vw,3.1rem);line-height:1.15;}
+h3{font-size:1.7rem;}
+h4{font-size:1.3rem;}
+.lead{font-size:1.08rem;color:var(--text-secondary);max-width:52ch;}
+.eyebrow{
+  font-family:var(--font-body);
+  font-size:.72rem;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  color:var(--accent);
+  font-weight:600;
+  margin-bottom:14px;
+  display:inline-block;
+}
+
+/* ============ BUTTONS ============ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:15px 34px;
+  font-family:var(--font-body);font-weight:500;font-size:.85rem;
+  letter-spacing:.04em;text-transform:uppercase;
+  border-radius:2px;
+  position:relative;overflow:hidden;
+  transition:transform .4s var(--ease), box-shadow .4s var(--ease), color .4s ease, background .4s ease;
+}
+.btn-solid{
+  background:linear-gradient(135deg,#C79A62,var(--accent) 60%,#96723F);
+  color:#fff;
+  box-shadow:0 10px 24px -10px rgba(181,139,88,.55);
+}
+.btn-solid:hover{box-shadow:0 14px 30px -8px rgba(181,139,88,.7); transform:translateY(-2px);}
+.btn-line{
+  border:1px solid var(--accent);
+  color:var(--text-dark);
+  background:transparent;
+}
+.btn-line:hover{background:var(--accent);color:#fff;transform:translateY(-2px);}
+.text-link{
+  font-size:.85rem;font-weight:600;color:var(--accent);
+  letter-spacing:.02em;
+  position:relative;
+}
+.text-link::after{content:"";position:absolute;left:0;bottom:-2px;width:0;height:1px;background:var(--accent);transition:width .35s var(--ease);}
+.text-link:hover::after{width:100%;}
+
+/* ============ LOADER ============ */
+.loader{
+  position:fixed;inset:0;z-index:9999;
+  background:var(--bg);
+  display:flex;align-items:center;justify-content:center;
+  transition:opacity .9s var(--ease), visibility .9s var(--ease);
+}
+.loader.is-hidden{opacity:0;visibility:hidden;}
+.loader-inner{text-align:center;}
+.loader-mark{display:none;}
+.loader-word{
+  font-family:var(--font-display);
+  font-size:clamp(2rem,5vw,3rem);
+  letter-spacing:.06em;
+  color:var(--text-dark);
+  display:block;
+  opacity:0;
+  animation:loaderFade 1.4s var(--ease) forwards .2s;
+}
+.loader-line{
+  display:block;
+  width:0;height:1px;
+  background:var(--accent);
+  margin:22px auto 0;
+  animation:loaderLine 1.2s var(--ease) forwards .5s;
+}
+@keyframes loaderFade{to{opacity:1;}}
+@keyframes loaderLine{to{width:120px;}}
+
+/* ============ SCROLL PROGRESS ============ */
+.scroll-progress{
+  position:fixed;top:0;left:0;height:2px;width:0%;
+  background:var(--accent);z-index:1200;
+  transition:width .1s linear;
+}
+
+/* ============ CUSTOM CURSOR ============ */
+.cursor-dot,.cursor-ring{
+  position:fixed;top:0;left:0;pointer-events:none;z-index:1300;
+  border-radius:50%;transform:translate(-50%,-50%);
+  transition:opacity .3s ease;
+  opacity:0;
+}
+.cursor-dot{width:5px;height:5px;background:var(--accent);}
+.cursor-ring{width:34px;height:34px;border:1px solid var(--accent-soft);transition:width .25s var(--ease),height .25s var(--ease),opacity .3s ease,border-color .25s ease;}
+body.cursor-ready .cursor-dot,body.cursor-ready .cursor-ring{opacity:1;}
+.cursor-ring.is-active{width:52px;height:52px;border-color:var(--accent);}
+@media (hover:none), (pointer:coarse){.cursor-dot,.cursor-ring{display:none;}}
+
+/* ============ NAV ============ */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:900;
+  padding:26px 0;
+  transition:padding .4s var(--ease), background .4s var(--ease), box-shadow .4s var(--ease), border-color .4s ease;
+  border-bottom:1px solid transparent;
+}
+.nav.is-scrolled{
+  padding:14px 0;
+  background:rgba(250,247,242,.72);
+  backdrop-filter:blur(14px) saturate(160%);
+  -webkit-backdrop-filter:blur(14px) saturate(160%);
+  border-bottom:1px solid var(--border);
+  box-shadow:0 8px 30px -20px rgba(45,43,42,.25);
+}
+.nav-inner{
+  max-width:1280px;margin:0 auto;padding:0 32px;
+  display:flex;align-items:center;justify-content:space-between;gap:24px;
+}
+.nav-logo{
+  font-family:var(--font-display);font-size:1.4rem;letter-spacing:.03em;
+  display:flex;align-items:center;gap:10px;
+}
+.nav-logo-arch{
+  width:16px;height:16px;border:1.4px solid var(--accent);
+  border-radius:16px 16px 0 0;border-bottom:none;display:inline-block;
+}
+.nav-menu{display:flex;gap:34px;}
+.nav-link{
+  font-size:.83rem;font-weight:500;letter-spacing:.03em;color:var(--text-dark);
+  position:relative;padding:4px 0;
+}
+.nav-link::after{content:"";position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--accent);transition:width .35s var(--ease);}
+.nav-link:hover::after,.nav-link.is-active::after{width:100%;}
+.nav-cta{padding:11px 24px;font-size:.75rem;}
+.nav-burger{display:none;flex-direction:column;gap:5px;width:26px;}
+.nav-burger span{height:1px;background:var(--text-dark);width:100%;transition:transform .35s var(--ease),opacity .35s ease;}
+
+.mobile-menu{
+  position:fixed;inset:0;z-index:890;
+  background:var(--bg);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;
+  transform:translateY(-100%);opacity:0;
+  transition:transform .5s var(--ease), opacity .5s var(--ease);
+  pointer-events:none;
+}
+.mobile-menu.is-open{transform:translateY(0);opacity:1;pointer-events:auto;}
+.mobile-link{font-family:var(--font-display);font-size:1.6rem;}
+.mobile-cta{margin-top:12px;}
+
+/* ============ HERO ============ */
+.hero{
+  position:relative;height:100vh;min-height:640px;
+  display:flex;align-items:flex-end;
+  overflow:hidden;
+}
+.hero-media{position:absolute;inset:0;}
+.hero-media img{width:100%;height:100%;object-fit:cover;transform:scale(1.08);animation:heroZoom 16s ease-out forwards;}
+@keyframes heroZoom{to{transform:scale(1);}}
+.hero-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(45,43,42,.15) 0%,rgba(45,43,42,.1) 40%,rgba(20,17,14,.72) 100%);
+}
+.hero-deco{position:absolute;border:1px solid rgba(250,247,242,.35);border-radius:50%;pointer-events:none;}
+.hero-deco--1{width:220px;height:220px;top:14%;right:8%;animation:floatSlow 9s ease-in-out infinite;}
+.hero-deco--2{width:110px;height:110px;bottom:22%;left:6%;animation:floatSlow 7s ease-in-out infinite reverse;}
+@keyframes floatSlow{0%,100%{transform:translateY(0);}50%{transform:translateY(-18px);}}
+.hero-content{position:relative;z-index:2;color:#fff;padding:0 32px 110px;max-width:960px;margin:0 auto;width:100%;}
+.hero-title{display:flex;flex-direction:column;font-size:clamp(2.4rem,6vw,4.6rem);line-height:1.05;font-weight:400;}
+.hero-title-em{font-style:italic;color:var(--accent-gold);}
+.hero-sub{max-width:520px;margin-top:22px;font-size:1.05rem;color:rgba(255,255,255,.85);}
+.hero-actions{margin-top:34px;display:flex;gap:18px;flex-wrap:wrap;}
+.hero .btn-line{border-color:rgba(255,255,255,.6);color:#fff;}
+.hero .btn-line:hover{background:#fff;color:var(--text-dark);}
+
+.scroll-indicator{
+  position:absolute;bottom:34px;left:50%;transform:translateX(-50%);
+  z-index:2;color:#fff;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+}
+.scroll-indicator-line{width:1px;height:38px;background:rgba(255,255,255,.6);position:relative;overflow:hidden;}
+.scroll-indicator-line::after{content:"";position:absolute;top:-100%;left:0;width:100%;height:100%;background:#fff;animation:scrollLine 2s ease-in-out infinite;}
+@keyframes scrollLine{50%{top:100%;}100%{top:100%;}}
+
+/* ============ REVEAL ANIMATIONS ============ */
+.reveal-up,.reveal-scale{opacity:0;transition:opacity .9s var(--ease), transform .9s var(--ease);transition-delay:var(--d,0s);}
+.reveal-up{transform:translateY(34px);}
+.reveal-scale{transform:scale(.94);}
+.reveal-up.is-visible,.reveal-scale.is-visible{opacity:1;transform:none;}
+.hero .reveal-up{transition-delay:var(--d,0s);}
+.hero .reveal-up{opacity:0;transform:translateY(24px);animation:heroReveal .9s var(--ease) forwards;animation-delay:var(--d,0s);}
+@keyframes heroReveal{to{opacity:1;transform:none;}}
+
+/* ============ ABOUT ============ */
+.about{padding:150px 0 130px;}
+.about-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:90px;align-items:center;}
+.about-media{position:relative;}
+.about-media-main{border-radius:var(--radius-arch);overflow:hidden;box-shadow:0 40px 60px -30px rgba(45,43,42,.35);}
+.about-media-main img{aspect-ratio:4/5;object-fit:cover;}
+.about-media-float{
+  position:absolute;bottom:-58px;left:-70px;width:44%;
+  border-radius:16px;overflow:hidden;border:8px solid var(--bg);
+  box-shadow:0 30px 40px -20px rgba(45,43,42,.3);
+}
+.about-media-float img{aspect-ratio:4/5;object-fit:cover;}
+.about-stat-badge{
+  position:absolute;top:24px;right:-30px;background:var(--card);
+  padding:22px 24px;border-radius:14px;border:1px solid var(--border);
+  box-shadow:0 20px 40px -22px rgba(45,43,42,.3);
+  display:flex;flex-direction:column;text-align:center;
+}
+.about-stat-badge strong{font-family:var(--font-display);font-size:2rem;color:var(--accent);}
+.about-stat-badge span{font-size:.7rem;color:var(--text-secondary);letter-spacing:.02em;max-width:110px;}
+.about-copy h2{margin-bottom:22px;}
+.about-copy .lead{margin-bottom:16px;}
+.about-copy p{margin-bottom:14px;color:var(--text-secondary);}
+.about-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:42px;padding-top:34px;border-top:1px solid var(--border);}
+.stat{display:flex;flex-direction:column;}
+.stat-num{font-family:var(--font-display);font-size:2.2rem;color:var(--text-dark);}
+.stat-num::after{content:"+";}
+.stat-label{font-size:.72rem;color:var(--text-secondary);letter-spacing:.03em;margin-top:4px;}
+
+/* ============ SERVICES ============ */
+.services{padding:110px 0;background:var(--bg-secondary);}
+.section-head{max-width:640px;margin:0 auto 64px;text-align:center;}
+.section-head .lead{margin:0 auto;}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:36px;}
+.service-card{
+  background:var(--card);border:1px solid var(--border);border-radius:18px;overflow:hidden;
+  transition:transform .5s var(--ease), box-shadow .5s var(--ease);
+}
+.service-card:hover{transform:translateY(-8px);box-shadow:0 30px 50px -30px rgba(45,43,42,.35);}
+.service-media{height:220px;border-radius:130px 130px 0 0;overflow:hidden;margin:14px 14px 0;}
+.service-media img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease);}
+.service-card:hover .service-media img{transform:scale(1.08);}
+.service-body{padding:26px 26px 30px;}
+.service-icon{color:var(--accent);width:34px;height:34px;display:block;margin-bottom:14px;}
+.service-icon svg{width:100%;height:100%;}
+.service-body h3{font-size:1.35rem;margin-bottom:8px;}
+.service-body p{color:var(--text-secondary);font-size:.92rem;margin-bottom:16px;}
+
+/* ============ WHY ============ */
+.why{padding:120px 0;}
+.why-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:70px;}
+.why-copy h2{margin-bottom:18px;}
+.why-list{display:grid;grid-template-columns:1fr 1fr;gap:30px 34px;}
+.why-item{display:flex;gap:16px;}
+.why-icon{flex-shrink:0;width:40px;height:40px;color:var(--accent);border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;padding:9px;}
+.why-item h4{margin-bottom:6px;font-size:1.1rem;}
+.why-item p{color:var(--text-secondary);font-size:.9rem;}
+
+/* ============ GALLERY ============ */
+.gallery{padding:110px 0;background:var(--bg-secondary);}
+.gallery-filters{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:46px;}
+.filter-btn{
+  padding:10px 22px;border:1px solid var(--border);border-radius:30px;
+  font-size:.78rem;letter-spacing:.03em;color:var(--text-secondary);
+  transition:all .35s var(--ease);
+}
+.filter-btn:hover{border-color:var(--accent);color:var(--accent);}
+.filter-btn.is-active{background:var(--accent);border-color:var(--accent);color:#fff;}
+.masonry{columns:4 260px;column-gap:20px;}
+.masonry-item{
+  break-inside:avoid;margin-bottom:20px;border-radius:12px;overflow:hidden;
+  position:relative;cursor:pointer;transition:transform .4s var(--ease);
+}
+.masonry-item img{width:100%;display:block;transition:transform .7s var(--ease);}
+.masonry-item:hover img{transform:scale(1.06);}
+.masonry-item::after{
+  content:"◇";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  background:rgba(45,43,42,0);color:#fff;font-size:1.6rem;opacity:0;
+  transition:opacity .4s ease, background .4s ease;
+}
+.masonry-item:hover::after{opacity:1;background:rgba(45,43,42,.28);}
+.masonry-item.is-hidden{display:none;}
+
+.lightbox{
+  position:fixed;inset:0;z-index:1100;background:rgba(20,17,14,.92);
+  display:flex;align-items:center;justify-content:center;padding:40px;
+  opacity:0;pointer-events:none;transition:opacity .4s ease;
+}
+.lightbox.is-open{opacity:1;pointer-events:auto;}
+.lightbox img{max-width:90vw;max-height:85vh;border-radius:6px;}
+.lightbox-close{position:absolute;top:28px;right:36px;color:#fff;font-size:2rem;line-height:1;}
+
+/* ============ PACKAGES ============ */
+.packages{padding:120px 0;}
+.packages-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;align-items:start;}
+.package-card{
+  background:var(--card);border:1px solid var(--border);border-radius:20px;
+  padding:46px 38px;text-align:center;position:relative;
+  transition:transform .5s var(--ease), box-shadow .5s var(--ease);
+}
+.package-card:hover{transform:translateY(-8px);box-shadow:0 30px 50px -28px rgba(45,43,42,.3);}
+.package-card--featured{
+  background:linear-gradient(180deg,#3A2E22,#241B14);color:#F3EEE7;
+  transform:scale(1.04);
+  box-shadow:0 40px 70px -30px rgba(45,43,42,.5);
+}
+.package-card--featured:hover{transform:scale(1.04) translateY(-8px);}
+.package-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--accent-gold);color:#2D2B2A;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;padding:7px 18px;border-radius:20px;font-weight:700;}
+.package-tier{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+.package-card--featured .package-tier{color:var(--accent-gold);}
+.package-name{font-size:2.1rem;margin-bottom:14px;}
+.package-price{font-size:.95rem;color:var(--text-secondary);margin-bottom:28px;}
+.package-card--featured .package-price{color:rgba(243,238,231,.75);}
+.package-price strong{font-family:var(--font-display);font-size:1.5rem;color:var(--text-dark);}
+.package-card--featured .package-price strong{color:#fff;}
+.package-features{margin-bottom:32px;text-align:left;display:inline-block;}
+.package-features li{padding:9px 0;border-bottom:1px solid var(--border);font-size:.92rem;color:var(--text-secondary);}
+.package-card--featured .package-features li{border-color:rgba(243,238,231,.15);color:rgba(243,238,231,.85);}
+.package-features li:last-child{border-bottom:none;}
+
+/* ============ PROCESS ============ */
+.process{padding:120px 0;background:var(--bg-secondary);}
+.timeline{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:24px;margin-top:20px;}
+.timeline-line{position:absolute;top:26px;left:10%;right:10%;height:1px;background:var(--border);}
+.timeline-item{position:relative;text-align:center;padding-top:12px;}
+.timeline-icon{
+  width:54px;height:54px;border-radius:50%;background:var(--card);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;margin:0 auto 20px;color:var(--accent);
+  position:relative;z-index:2;
+}
+.timeline-icon svg{width:26px;height:26px;}
+.timeline-item h4{font-size:1.1rem;margin-bottom:8px;}
+.timeline-item p{font-size:.85rem;color:var(--text-secondary);}
+
+/* ============ TESTIMONIALS ============ */
+.testimonials{padding:120px 0;}
+.testimonial-slider{max-width:760px;margin:0 auto;text-align:center;position:relative;}
+.testimonial-track{position:relative;min-height:260px;}
+.testimonial-card{
+  position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .7s var(--ease);
+  display:flex;flex-direction:column;align-items:center;
+}
+.testimonial-card.is-active{opacity:1;visibility:visible;position:relative;}
+.stars{display:flex;gap:5px;color:var(--accent);margin-bottom:22px;justify-content:center;}
+.stars svg{width:16px;height:16px;}
+.testimonial-card p{font-family:var(--font-display);font-size:1.5rem;line-height:1.5;font-style:italic;color:var(--text-dark);margin-bottom:28px;}
+.testimonial-card footer{display:flex;align-items:center;gap:14px;}
+.testimonial-card footer img{width:48px;height:48px;border-radius:50%;object-fit:cover;}
+.testimonial-card footer div{text-align:left;}
+.testimonial-card footer strong{display:block;font-size:.92rem;}
+.testimonial-card footer span{font-size:.78rem;color:var(--text-secondary);}
+.testimonial-dots{display:flex;gap:10px;justify-content:center;margin-top:38px;}
+.testimonial-dots button{width:8px;height:8px;border-radius:50%;background:var(--border);transition:background .3s ease, transform .3s ease;}
+.testimonial-dots button.is-active{background:var(--accent);transform:scale(1.3);}
+
+/* ============ FAQ ============ */
+.faq{padding:120px 0;background:var(--bg-secondary);}
+.faq-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:70px;}
+.faq-grid h2{margin-top:6px;}
+.accordion-item{border-bottom:1px solid var(--border);}
+.accordion-trigger{
+  width:100%;display:flex;justify-content:space-between;align-items:center;
+  padding:24px 0;text-align:left;font-family:var(--font-display);font-size:1.15rem;
+}
+.accordion-plus{position:relative;width:16px;height:16px;flex-shrink:0;margin-left:20px;}
+.accordion-plus::before,.accordion-plus::after{content:"";position:absolute;background:var(--accent);transition:transform .35s var(--ease);}
+.accordion-plus::before{top:50%;left:0;width:100%;height:1px;transform:translateY(-50%);}
+.accordion-plus::after{left:50%;top:0;width:1px;height:100%;transform:translateX(-50%);}
+.accordion-item.is-open .accordion-plus::after{transform:translateX(-50%) rotate(90deg);opacity:0;}
+.accordion-panel{max-height:0;overflow:hidden;transition:max-height .5s var(--ease);}
+.accordion-panel p{padding-bottom:24px;color:var(--text-secondary);max-width:60ch;}
+
+/* ============ CTA BANNER ============ */
+.cta-banner{position:relative;height:60vh;min-height:420px;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.cta-banner img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.cta-banner-overlay{position:absolute;inset:0;background:rgba(30,24,18,.5);}
+.cta-banner-content{position:relative;z-index:2;text-align:center;color:#fff;}
+.cta-banner-content h2{color:#fff;margin-bottom:30px;font-size:clamp(2rem,4.5vw,3.2rem);}
+
+/* ============ CONTACT ============ */
+.contact{padding:130px 0;}
+.contact-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:80px;}
+.contact-info h2{margin:6px 0 18px;}
+.contact-details{margin-top:34px;display:flex;flex-direction:column;gap:18px;}
+.contact-details li{display:flex;flex-direction:column;gap:2px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+.contact-details strong{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);}
+.contact-map{margin-top:34px;height:160px;border-radius:14px;background:var(--bg-secondary);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text-secondary);font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;}
+
+.contact-form{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:44px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+.form-field{margin-bottom:22px;display:flex;flex-direction:column;}
+.form-field label{font-size:.78rem;letter-spacing:.04em;color:var(--text-secondary);margin-bottom:8px;}
+.form-field input,.form-field select,.form-field textarea{
+  border:1px solid var(--border);border-radius:8px;padding:13px 15px;background:var(--bg);
+  transition:border-color .3s ease, box-shadow .3s ease;
+}
+.form-field input:focus,.form-field select:focus,.form-field textarea:focus{
+  outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(181,139,88,.15);
+}
+.form-error{display:none;font-size:.75rem;color:#B0503E;margin-top:6px;}
+.form-field.has-error input,.form-field.has-error select,.form-field.has-error textarea{border-color:#B0503E;}
+.form-field.has-error .form-error{display:block;}
+.form-success{display:none;margin-top:18px;font-size:.9rem;color:#6A8F6B;}
+.form-success.is-visible{display:block;}
+.contact-form .btn{width:100%;}
+
+/* ============ FOOTER ============ */
+.footer{background:#241B14;color:#E9E2D6;padding:90px 0 0;}
+.footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1.3fr;gap:50px;padding-bottom:70px;border-bottom:1px solid rgba(233,226,214,.12);}
+.footer-logo{color:#fff;margin-bottom:16px;}
+.footer-logo .nav-logo-arch{border-color:var(--accent-gold);}
+.footer-brand p{color:rgba(233,226,214,.6);font-size:.9rem;max-width:32ch;margin-bottom:22px;}
+.footer-social{display:flex;gap:14px;}
+.footer-social a{width:36px;height:36px;border:1px solid rgba(233,226,214,.25);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#E9E2D6;transition:border-color .3s ease,color .3s ease;}
+.footer-social a svg{width:16px;height:16px;}
+.footer-social a:hover{border-color:var(--accent-gold);color:var(--accent-gold);}
+.footer-col h5,.footer-newsletter h5{font-family:var(--font-display);font-size:1.1rem;font-weight:500;margin-bottom:20px;}
+.footer-col{display:flex;flex-direction:column;gap:12px;}
+.footer-col a{color:rgba(233,226,214,.65);font-size:.9rem;transition:color .3s ease;}
+.footer-col a:hover{color:var(--accent-gold);}
+.footer-newsletter p{color:rgba(233,226,214,.6);font-size:.88rem;margin-bottom:18px;}
+.newsletter-form{display:flex;border-bottom:1px solid rgba(233,226,214,.3);padding-bottom:10px;}
+.newsletter-form input{flex:1;background:transparent;border:none;color:#fff;font-size:.9rem;}
+.newsletter-form input::placeholder{color:rgba(233,226,214,.45);}
+.newsletter-form button{color:var(--accent-gold);font-size:1.1rem;}
+.footer-bottom{max-width:1240px;margin:0 auto;padding:26px 32px;display:flex;justify-content:space-between;font-size:.78rem;color:rgba(233,226,214,.5);flex-wrap:wrap;gap:10px;}
+.footer-legal a{margin-left:20px;color:rgba(233,226,214,.5);}
+.footer-legal a:hover{color:var(--accent-gold);}
+
+/* ============ BACK TO TOP ============ */
+.back-to-top{
+  position:fixed;bottom:30px;right:30px;width:46px;height:46px;border-radius:50%;
+  background:var(--accent);color:#fff;font-size:1.1rem;display:flex;align-items:center;justify-content:center;
+  opacity:0;visibility:hidden;transform:translateY(10px);
+  transition:opacity .4s ease, transform .4s ease, visibility .4s ease;
+  z-index:500;box-shadow:0 12px 24px -10px rgba(181,139,88,.6);
+}
+.back-to-top.is-visible{opacity:1;visibility:visible;transform:none;}
+
+/* ============ MAGNETIC ============ */
+.magnetic{transition:transform .25s var(--ease), box-shadow .4s var(--ease), background .4s ease, color .4s ease;}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width:1080px){
+  .about-grid,.why-grid,.faq-grid,.contact-grid{grid-template-columns:1fr;gap:60px;}
+  .services-grid{grid-template-columns:repeat(2,1fr);}
+  .timeline{grid-template-columns:repeat(5,1fr);}
+  .about-media-float{width:40%;left:-30px;bottom:-40px;}
+  .about-stat-badge{right:0;}
+}
+@media (max-width:860px){
+  .nav-menu,.nav-cta{display:none;}
+  .nav-burger{display:flex;}
+  .masonry{columns:2;}
+  .timeline{grid-template-columns:repeat(2,1fr);row-gap:44px;}
+  .timeline-line{display:none;}
+  .why-list{grid-template-columns:1fr;}
+  .packages-grid{grid-template-columns:1fr;max-width:420px;margin:0 auto;}
+  .package-card--featured{transform:none;}
+  .package-card--featured:hover{transform:translateY(-8px);}
+  .form-row{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr 1fr;}
+}
+@media (max-width:600px){
+  .section-inner{padding:0 22px;}
+  .about{padding:100px 0 90px;}
+  .services,.why,.gallery,.packages,.process,.testimonials,.faq,.contact{padding:80px 0;}
+  .about-stats{grid-template-columns:1fr 1fr;}
+  .about-media-float{position:static;width:100%;margin-top:20px;border:none;}
+  .about-stat-badge{position:static;margin-top:20px;display:inline-flex;}
+  .masonry{columns:1;}
+  .footer-grid{grid-template-columns:1fr;gap:40px;}
+  .contact-form{padding:30px 24px;}
+  .hero-content{padding-bottom:80px;}
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important;}
+}
+
+/* Focus visibility */
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{
+  outline:2px solid var(--accent);outline-offset:3px;
+}
+
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div class="loader" id="loader">
+  <div class="loader-inner">
+    <span class="loader-mark">MD</span>
+    <span class="loader-word">My&nbsp;Dream</span>
+    <span class="loader-line"></span>
+  </div>
+</div>
+
+<!-- SCROLL PROGRESS -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- CUSTOM CURSOR (desktop) -->
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<header class="nav" id="siteNav">
+  <div class="nav-inner">
+    <a href="#home" class="nav-logo">
+      <span class="nav-logo-arch"></span>
+      My&nbsp;Dream
+    </a>
+    <nav class="nav-menu" id="navMenu">
+      <a href="#home" class="nav-link is-active">Home</a>
+      <a href="#about" class="nav-link">About</a>
+      <a href="#services" class="nav-link">Services</a>
+      <a href="#gallery" class="nav-link">Gallery</a>
+      <a href="#packages" class="nav-link">Packages</a>
+      <a href="#testimonials" class="nav-link">Testimonials</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </nav>
+    <a href="#contact" class="btn btn-line nav-cta magnetic">Book Consultation</a>
+    <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#home" class="mobile-link">Home</a>
+  <a href="#about" class="mobile-link">About</a>
+  <a href="#services" class="mobile-link">Services</a>
+  <a href="#gallery" class="mobile-link">Gallery</a>
+  <a href="#packages" class="mobile-link">Packages</a>
+  <a href="#testimonials" class="mobile-link">Testimonials</a>
+  <a href="#contact" class="mobile-link">Contact</a>
+  <a href="#contact" class="btn btn-solid mobile-cta">Book Consultation</a>
+</div>
+
+<main>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-media">
+    <img src="https://source.unsplash.com/1800x1200/?luxury,wedding,reception&sig=101" alt="Luxury wedding reception styled with candlelight and florals" id="heroImg">
+    <div class="hero-overlay"></div>
+  </div>
+  <span class="hero-deco hero-deco--1" aria-hidden="true"></span>
+  <span class="hero-deco hero-deco--2" aria-hidden="true"></span>
+  <div class="hero-content">
+    <p class="eyebrow reveal-up">Est. for the extraordinary</p>
+    <h1 class="hero-title">
+      <span class="reveal-up" style="--d:0.05s">Crafting Extraordinary</span>
+      <span class="reveal-up" style="--d:0.18s">Events That Become</span>
+      <span class="reveal-up hero-title-em" style="--d:0.31s">Lifetime Memories</span>
+    </h1>
+    <p class="hero-sub reveal-up" style="--d:0.45s">From intimate vows to thousand-guest galas, our studio designs and delivers occasions for clients who expect the extraordinary — anywhere in the world.</p>
+    <div class="hero-actions reveal-up" style="--d:0.55s">
+      <a href="#contact" class="btn btn-solid magnetic">Book Consultation</a>
+      <a href="#services" class="btn btn-line magnetic">Explore Services</a>
+    </div>
+  </div>
+  <a href="#about" class="scroll-indicator" aria-label="Scroll to content">
+    <span class="scroll-indicator-line"></span>
+    <span>Scroll</span>
+  </a>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="section-inner about-grid">
+    <div class="about-media">
+      <div class="about-media-main reveal-scale">
+        <img src="https://source.unsplash.com/900x1100/?wedding,couple,elegant&sig=102" alt="Couple sharing an intimate moment at their wedding">
+      </div>
+      <div class="about-media-float reveal-scale" style="--d:0.15s">
+        <img src="https://source.unsplash.com/560x680/?florist,bouquet,luxury&sig=103" alt="Florist arranging a luxury bridal bouquet">
+      </div>
+      <span class="about-stat-badge reveal-scale" style="--d:0.3s">
+        <strong>12</strong>
+        <span>Years crafting occasions</span>
+      </span>
+    </div>
+    <div class="about-copy">
+      <p class="eyebrow reveal-up">Who we are</p>
+      <h2 class="reveal-up">A private studio for the world's most considered celebrations</h2>
+      <p class="lead reveal-up">My Dream is a boutique planning house working across continents for couples and companies who want their event to feel inevitable — as if it could not have been designed any other way.</p>
+      <p class="reveal-up">We pair the discipline of hospitality-grade logistics with an editor's eye for detail: hand-selected venues, growers we've known for a decade, and a production team that disappears into the background so you can be present in the room. Every My Dream event is built once, for the people living inside it.</p>
+      <div class="about-stats reveal-up">
+        <div class="stat"><span class="stat-num" data-count="12">0</span><span class="stat-label">Years of Practice</span></div>
+        <div class="stat"><span class="stat-num" data-count="420">0</span><span class="stat-label">Events Delivered</span></div>
+        <div class="stat"><span class="stat-num" data-count="98">0</span><span class="stat-label">Return Clients</span></div>
+        <div class="stat"><span class="stat-num" data-count="17">0</span><span class="stat-label">Industry Awards</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="section-inner">
+    <div class="section-head">
+      <p class="eyebrow reveal-up">What we design</p>
+      <h2 class="reveal-up">Services, tailored to the occasion</h2>
+      <p class="lead reveal-up">Six disciplines, one point of contact. Choose a single service or hand us the whole vision.</p>
+    </div>
+    <div class="services-grid">
+
+      <article class="service-card reveal-up">
+        <div class="service-media"><img src="https://source.unsplash.com/700x850/?wedding,ceremony,arch&sig=104" alt="Floral wedding ceremony arch"></div>
+        <div class="service-body">
+          <span class="service-icon" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none"><path d="M8 32V18a12 12 0 0124 0v14" stroke="currentColor" stroke-width="1.4"/><path d="M4 32h32" stroke="currentColor" stroke-width="1.4"/></svg></span>
+          <h3>Wedding Planning</h3>
+          <p>Full-service design and coordination from proposal to send-off.</p>
+          <a href="#contact" class="text-link">Learn More →</a>
+        </div>
+      </article>
+
+      <article class="service-card reveal-up" style="--d:0.08s">
+        <div class="service-media"><img src="https://source.unsplash.com/700x850/?corporate,gala,event&sig=105" alt="Elegant corporate gala setting"></div>
+        <div class="service-body">
+          <span class="service-icon" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none"><rect x="6" y="14" width="28" height="20" rx="1" stroke="currentColor" stroke-width="1.4"/><path d="M14 14V9a6 6 0 0112 0v5" stroke="currentColor" stroke-width="1.4"/></svg></span>
+          <h3>Corporate Events</h3>
+          <p>Brand launches, galas and summits built to move an audience.</p>
+          <a href="#contact" class="text-link">Learn More →</a>
+        </div>
+      </article>
+
+      <article class="service-card reveal-up" style="--d:0.16s">
+        <div class="service-media"><img src="https://source.unsplash.com/700x850/?birthday,celebration,luxury&sig=106" alt="Luxury birthday celebration table setting"></div>
+        <div class="service-body">
+          <span class="service-icon" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none"><path d="M20 6v6M12 34V20a8 8 0 0116 0v14" stroke="currentColor" stroke-width="1.4"/><path d="M8 34h24" stroke="currentColor" stroke-width="1.4"/></svg></span>
+          <h3>Birthday Celebrations</h3>
+          <p>Milestone birthdays with a bespoke theme, from twelve guests to two hundred.</p>
+          <a href="#contact" class="text-link">Learn More →</a>
+        </div>
+      </article>
+
+      <article class="service-card reveal-up" style="--d:0.24s">
+        <div class="service-media"><img src="https://source.unsplash.com/700x850/?destination,wedding,beach&sig=107" alt="Destination wedding setup by the coast"></div>
+        <div class="service-body">
+          <span class="service-icon" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="14" stroke="currentColor" stroke-width="1.4"/><path d="M6 20h28M20 6a20 20 0 010 28 20 20 0 010-28z" stroke="currentColor" stroke-width="1.4"/></svg></span>
+          <h3>Destination Weddings</h3>
+          <p>End-to-end planning across borders, permits and languages.</p>
+          <a href="#contact" class="text-link">Learn More →</a>
+        </div>
+      </article>
+
+      <article class="service-card reveal-up" style="--d:0.32s">
+        <div class="service-media"><img src="https://source.unsplash.com/700x850/?private,party,elegant&sig=108" alt="Private luxury party interior"></div>
+        <div class="service-body">
+          <span class="service-icon" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none"><path d="M20 4l4 8 8 1-6 6 1 9-7-4-7 4 1-9-6-6 8-1z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg></span>
+          <h3>Private Parties</h3>
+          <p>Anniversaries, homecomings and gatherings that feel effortless.</p>
+          <a href="#contact" class="text-link">Learn More →</a>
+        </div>
+      </article>
+
+      <article class="service-card reveal-up" style="--d:0.4s">
+        <div class="service-media"><img src="https://source.unsplash.com/700x850/?engagement,ring,romantic&sig=109" alt="Romantic engagement setting"></div>
+        <div class="service-body">
+          <span class="service-icon" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none"><path d="M20 34s-13-8.4-13-17A7 7 0 0120 12a7 7 0 0113 5c0 8.6-13 17-13 17z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></span>
+          <h3>Engagement Events</h3>
+          <p>The first chapter, designed with the same care as the last.</p>
+          <a href="#contact" class="text-link">Learn More →</a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE US -->
+<section class="why">
+  <div class="section-inner why-grid">
+    <div class="why-copy">
+      <p class="eyebrow reveal-up">Why My Dream</p>
+      <h2 class="reveal-up">Six reasons clients return to us for every occasion after the first</h2>
+      <p class="lead reveal-up">We built My Dream around the parts of event planning that are hardest to fake: judgment, relationships, and follow-through.</p>
+    </div>
+    <div class="why-list">
+      <div class="why-item reveal-up">
+        <span class="why-icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M6 16l7 7L26 9" stroke="currentColor" stroke-width="1.6"/></svg></span>
+        <div><h4>Meticulous Planning</h4><p>Every timeline mapped to the minute, months in advance.</p></div>
+      </div>
+      <div class="why-item reveal-up" style="--d:0.06s">
+        <span class="why-icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M16 4v6M16 22v6M4 16h6M22 16h6" stroke="currentColor" stroke-width="1.6"/><circle cx="16" cy="16" r="5" stroke="currentColor" stroke-width="1.6"/></svg></span>
+        <div><h4>Original Creativity</h4><p>Concepts designed once, never recycled between clients.</p></div>
+      </div>
+      <div class="why-item reveal-up" style="--d:0.12s">
+        <span class="why-icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><rect x="6" y="6" width="20" height="20" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M6 13h20" stroke="currentColor" stroke-width="1.6"/></svg></span>
+        <div><h4>Flawless Execution</h4><p>An on-site production team present for every hour of the event.</p></div>
+      </div>
+      <div class="why-item reveal-up" style="--d:0.18s">
+        <span class="why-icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="11" stroke="currentColor" stroke-width="1.6"/><path d="M6 16h20M16 6a17 17 0 010 20 17 17 0 010-20z" stroke="currentColor" stroke-width="1.6"/></svg></span>
+        <div><h4>International Reach</h4><p>Trusted crews and venues across 14 countries.</p></div>
+      </div>
+      <div class="why-item reveal-up" style="--d:0.24s">
+        <span class="why-icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M16 4l3 9h9l-7.5 5.5L23 27l-7-5-7 5 2.5-8.5L4 13h9z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></span>
+        <div><h4>Premium Vendors</h4><p>A decade-deep book of florists, chefs and artisans.</p></div>
+      </div>
+      <div class="why-item reveal-up" style="--d:0.3s">
+        <span class="why-icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="11" r="5" stroke="currentColor" stroke-width="1.6"/><path d="M6 27c1.5-6 6-9 10-9s8.5 3 10 9" stroke="currentColor" stroke-width="1.6"/></svg></span>
+        <div><h4>Personal Coordinator</h4><p>One dedicated lead, reachable from first call to final toast.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="section-inner">
+    <div class="section-head">
+      <p class="eyebrow reveal-up">Recent work</p>
+      <h2 class="reveal-up">A studio gallery, not a stock library</h2>
+    </div>
+    <div class="gallery-filters reveal-up">
+      <button class="filter-btn is-active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="wedding">Wedding</button>
+      <button class="filter-btn" data-filter="corporate">Corporate</button>
+      <button class="filter-btn" data-filter="birthday">Birthday</button>
+      <button class="filter-btn" data-filter="luxury">Luxury</button>
+      <button class="filter-btn" data-filter="destination">Destination</button>
+    </div>
+    <div class="masonry" id="masonry">
+      <div class="masonry-item" data-cat="wedding"><img src="https://source.unsplash.com/700x900/?wedding,table,decor&sig=110" alt="Wedding reception table decor"></div>
+      <div class="masonry-item" data-cat="luxury"><img src="https://source.unsplash.com/700x520/?luxury,ballroom&sig=111" alt="Luxury ballroom setup"></div>
+      <div class="masonry-item" data-cat="corporate"><img src="https://source.unsplash.com/700x780/?corporate,stage,event&sig=112" alt="Corporate event stage"></div>
+      <div class="masonry-item" data-cat="destination"><img src="https://source.unsplash.com/700x900/?destination,wedding,villa&sig=113" alt="Destination wedding villa"></div>
+      <div class="masonry-item" data-cat="birthday"><img src="https://source.unsplash.com/700x600/?birthday,party,table&sig=114" alt="Birthday party tablescape"></div>
+      <div class="masonry-item" data-cat="wedding"><img src="https://source.unsplash.com/700x860/?bride,portrait,elegant&sig=115" alt="Bridal portrait"></div>
+      <div class="masonry-item" data-cat="luxury"><img src="https://source.unsplash.com/700x760/?floral,centerpiece,luxury&sig=116" alt="Luxury floral centerpiece"></div>
+      <div class="masonry-item" data-cat="destination"><img src="https://source.unsplash.com/700x540/?wedding,beach,sunset&sig=117" alt="Beach wedding at sunset"></div>
+      <div class="masonry-item" data-cat="corporate"><img src="https://source.unsplash.com/700x880/?gala,dinner,event&sig=118" alt="Gala dinner setting"></div>
+      <div class="masonry-item" data-cat="wedding"><img src="https://source.unsplash.com/700x620/?wedding,rings,detail&sig=119" alt="Wedding ring detail shot"></div>
+    </div>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close">×</button>
+  <img src="" alt="" id="lightboxImg">
+</div>
+
+<!-- PACKAGES -->
+<section class="packages" id="packages">
+  <div class="section-inner">
+    <div class="section-head">
+      <p class="eyebrow reveal-up">Investment</p>
+      <h2 class="reveal-up">Packages built around how involved you want to be</h2>
+    </div>
+    <div class="packages-grid">
+      <div class="package-card reveal-up">
+        <p class="package-tier">Essentials</p>
+        <h3 class="package-name">Silver</h3>
+        <p class="package-price">From <strong>$5,000</strong></p>
+        <ul class="package-features">
+          <li>Venue selection assistance</li>
+          <li>Day-of coordination</li>
+          <li>Floral arrangement guidance</li>
+          <li>One planning consultation</li>
+        </ul>
+        <a href="#contact" class="btn btn-line magnetic">Book Now</a>
+      </div>
+      <div class="package-card package-card--featured reveal-up" style="--d:0.1s">
+        <span class="package-badge">Most Chosen</span>
+        <p class="package-tier">Signature</p>
+        <h3 class="package-name">Gold</h3>
+        <p class="package-price">From <strong>$8,500</strong></p>
+        <ul class="package-features">
+          <li>Premium venue sourcing</li>
+          <li>Full day-of coordination</li>
+          <li>Custom floral design</li>
+          <li>Catering & tasting sessions</li>
+          <li>Dedicated coordinator</li>
+        </ul>
+        <a href="#contact" class="btn btn-solid magnetic">Book Now</a>
+      </div>
+      <div class="package-card reveal-up" style="--d:0.2s">
+        <p class="package-tier">Full Service</p>
+        <h3 class="package-name">Platinum</h3>
+        <p class="package-price">From <strong>$12,000</strong></p>
+        <ul class="package-features">
+          <li>End-to-end event planning</li>
+          <li>Full production & staffing</li>
+          <li>Bespoke floral & decor</li>
+          <li>Unlimited consultations</li>
+          <li>International logistics</li>
+        </ul>
+        <a href="#contact" class="btn btn-line magnetic">Book Now</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process">
+  <div class="section-inner">
+    <div class="section-head">
+      <p class="eyebrow reveal-up">How it works</p>
+      <h2 class="reveal-up">Five stages, one continuous thread</h2>
+    </div>
+    <div class="timeline">
+      <span class="timeline-line" aria-hidden="true"></span>
+      <div class="timeline-item reveal-up">
+        <span class="timeline-icon"><svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="11" stroke="currentColor" stroke-width="1.4"/><path d="M16 10v6l4 3" stroke="currentColor" stroke-width="1.4"/></svg></span>
+        <h4>Consultation</h4><p>We listen first — your story, your guests, your budget.</p>
+      </div>
+      <div class="timeline-item reveal-up" style="--d:0.1s">
+        <span class="timeline-icon"><svg viewBox="0 0 32 32" fill="none"><path d="M6 26V10l10-6 10 6v16" stroke="currentColor" stroke-width="1.4"/></svg></span>
+        <h4>Planning</h4><p>Venue, vendors and budget locked into a single timeline.</p>
+      </div>
+      <div class="timeline-item reveal-up" style="--d:0.2s">
+        <span class="timeline-icon"><svg viewBox="0 0 32 32" fill="none"><path d="M16 4l3 9h9l-7.5 5.5L23 27l-7-5-7 5 2.5-8.5L4 13h9z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg></span>
+        <h4>Design</h4><p>Mood, palette and every visual detail brought to life.</p>
+      </div>
+      <div class="timeline-item reveal-up" style="--d:0.3s">
+        <span class="timeline-icon"><svg viewBox="0 0 32 32" fill="none"><rect x="6" y="6" width="20" height="20" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M6 13h20" stroke="currentColor" stroke-width="1.4"/></svg></span>
+        <h4>Execution</h4><p>Our team runs the day so you never have to check the time.</p>
+      </div>
+      <div class="timeline-item reveal-up" style="--d:0.4s">
+        <span class="timeline-icon"><svg viewBox="0 0 32 32" fill="none"><path d="M8 20l6 6L26 10" stroke="currentColor" stroke-width="1.6"/></svg></span>
+        <h4>Celebration</h4><p>You arrive as a guest to an event you helped design.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonials">
+  <div class="section-inner">
+    <div class="section-head">
+      <p class="eyebrow reveal-up">Client words</p>
+      <h2 class="reveal-up">What they remember most</h2>
+    </div>
+    <div class="testimonial-slider">
+      <div class="testimonial-track" id="testimonialTrack">
+        <blockquote class="testimonial-card is-active">
+          <span class="stars" aria-hidden="true">
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.8 6.2.6-4.7 4.2 1.4 6.1L10 14.9l-5.5 2.8 1.4-6.1L1.2 7.4l6.2-.6z" fill="currentColor"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.8 6.2.6-4.7 4.2 1.4 6.1L10 14.9l-5.5 2.8 1.4-6.1L1.2 7.4l6.2-.6z" fill="currentColor"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.8 6.2.6-4.7 4.2 1.4 6.1L10 14.9l-5.5 2.8 1.4-6.1L1.2 7.4l6.2-.6z" fill="currentColor"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.8 6.2.6-4.7 4.2 1.4 6.1L10 14.9l-5.5 2.8 1.4-6.1L1.2 7.4l6.2-.6z" fill="currentColor"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.8 6.2.6-4.7 4.2 1.4 6.1L10 14.9l-5.5 2.8 1.4-6.1L1.2 7.4l6.2-.6z" fill="currentColor"/></svg>
+          </span>
+          <p>My Dream understood our vision before we could fully articulate it. Every detail on the day felt considered, and we never once saw them working.</p>
+          <footer><img src="https://source.unsplash.com/80x80/?woman,portrait&sig=201" alt=""><div><strong>Charlotte Weiss</strong><span>Wedding, Lake Como</span></div></footer>
+        </blockquote>
+        <blockquote class="testimonial-card">
+          <span class="stars" aria-hidden="true">
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.8 6.2.6-4.7 4.2 1.4 6.1L10 14.9l-5.5 2.8 1.4-6.1L1.2 7.4l6.2-.6z" fill="currentColor"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.8 6.2.6-4.7 4.2 1.4 6.1L10 14.9l-5.5 2.8 1.4-6.1L1.2 7.4l6.2-.6z" fill="currentColor"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.8 6.2.6-4.7 4.2 1.4 6.1L10 14.9l-5.5 2.8 1.4-6.1L1.2 7.4l6.2-.6z" fill="currentColor"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.8 6.2.6-4.7 4.2 1.4 6.1L10 14.9l-5.5 2.8 1.4-6.1L1.2 7.4l6.2-.6z" fill="currentColor"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.8 6.2.6-4.7 4.2 1.4 6.1L10 14.9l-5.5 2.8 1.4-6.1L1.2 7.4l6.2-.6z" fill="currentColor"/></svg>
+          </span>
+          <p>We flew a fifteen-person crew across three time zones for our product launch. My Dream ran it like it was down the street from their office.</p>
+          <footer><img src="https://source.unsplash.com/80x80/?man,portrait&sig=202" alt=""><div><strong>Julian Novak</strong><span>Corporate Gala, Singapore</span></div></footer>
+        </blockquote>
+        <blockquote class="testimonial-card">
+          <span class="stars" aria-hidden="true">
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.8 6.2.6-4.7 4.2 1.4 6.1L10 14.9l-5.5 2.8 1.4-6.1L1.2 7.4l6.2-.6z" fill="currentColor"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.8 6.2.6-4.7 4.2 1.4 6.1L10 14.9l-5.5 2.8 1.4-6.1L1.2 7.4l6.2-.6z" fill="currentColor"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.8 6.2.6-4.7 4.2 1.4 6.1L10 14.9l-5.5 2.8 1.4-6.1L1.2 7.4l6.2-.6z" fill="currentColor"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.8 6.2.6-4.7 4.2 1.4 6.1L10 14.9l-5.5 2.8 1.4-6.1L1.2 7.4l6.2-.6z" fill="currentColor"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.8 6.2.6-4.7 4.2 1.4 6.1L10 14.9l-5.5 2.8 1.4-6.1L1.2 7.4l6.2-.6z" fill="currentColor"/></svg>
+          </span>
+          <p>Our daughter's sixteenth felt like a couture runway. My Dream turned a single mood board into a room none of us will forget.</p>
+          <footer><img src="https://source.unsplash.com/80x80/?woman,smiling,portrait&sig=203" alt=""><div><strong>Renata Silva</strong><span>Milestone Birthday, São Paulo</span></div></footer>
+        </blockquote>
+      </div>
+      <div class="testimonial-dots" id="testimonialDots"></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="section-inner faq-grid">
+    <div>
+      <p class="eyebrow reveal-up">Good to know</p>
+      <h2 class="reveal-up">Questions we hear before the first call</h2>
+    </div>
+    <div class="accordion">
+      <div class="accordion-item reveal-up">
+        <button class="accordion-trigger" aria-expanded="false">
+          <span>How far in advance should we book?</span><span class="accordion-plus"></span>
+        </button>
+        <div class="accordion-panel"><p>Most weddings and destination events are booked twelve to eighteen months out. Corporate and private parties can move faster — as little as eight weeks with the Gold or Platinum package.</p></div>
+      </div>
+      <div class="accordion-item reveal-up">
+        <button class="accordion-trigger" aria-expanded="false">
+          <span>Do you work outside your home country?</span><span class="accordion-plus"></span>
+        </button>
+        <div class="accordion-panel"><p>Yes. My Dream plans internationally as standard practice, with trusted local crews and vendors in fourteen countries and growing.</p></div>
+      </div>
+      <div class="accordion-item reveal-up">
+        <button class="accordion-trigger" aria-expanded="false">
+          <span>Can we mix elements from different packages?</span><span class="accordion-plus"></span>
+        </button>
+        <div class="accordion-panel"><p>Every package is a starting point. During your consultation we scope a plan around your priorities, guest count and venue.</p></div>
+      </div>
+      <div class="accordion-item reveal-up">
+        <button class="accordion-trigger" aria-expanded="false">
+          <span>What happens on the day itself?</span><span class="accordion-plus"></span>
+        </button>
+        <div class="accordion-panel"><p>Your coordinator and production team arrive before the first vendor and stay until the last guest leaves, managing every moving part so you don't have to.</p></div>
+      </div>
+      <div class="accordion-item reveal-up">
+        <button class="accordion-trigger" aria-expanded="false">
+          <span>How do payments work?</span><span class="accordion-plus"></span>
+        </button>
+        <div class="accordion-panel"><p>A deposit secures your date, with the balance split across milestones agreed during planning. Full details are shared after your consultation.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="cta-banner">
+  <img src="https://source.unsplash.com/1800x900/?wedding,celebration,night&sig=301" alt="Celebration under string lights at dusk">
+  <div class="cta-banner-overlay"></div>
+  <div class="cta-banner-content reveal-up">
+    <h2>Book Your Dream Event Today</h2>
+    <a href="#contact" class="btn btn-solid magnetic">Start the Conversation</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="section-inner contact-grid">
+    <div class="contact-info reveal-up">
+      <p class="eyebrow">Get in touch</p>
+      <h2>Let's talk about your event</h2>
+      <p class="lead">Tell us a little about what you're planning and a coordinator will reply within one business day.</p>
+      <ul class="contact-details">
+        <li><strong>Phone</strong><span>+1 (415) 555-0182</span></li>
+        <li><strong>Email</strong><span>hello@mydream-events.com</span></li>
+        <li><strong>Office</strong><span>21 Belgrave Crescent, London, UK</span></li>
+        <li><strong>Hours</strong><span>Mon–Fri, 9:00–18:00 GMT</span></li>
+      </ul>
+      <div class="contact-map" aria-hidden="true">
+        <span>Map</span>
+      </div>
+    </div>
+    <form class="contact-form reveal-up" id="contactForm" novalidate>
+      <div class="form-row">
+        <div class="form-field">
+          <label for="fName">Full name</label>
+          <input type="text" id="fName" name="name" required>
+          <span class="form-error">Please enter your name.</span>
+        </div>
+        <div class="form-field">
+          <label for="fEmail">Email</label>
+          <input type="email" id="fEmail" name="email" required>
+          <span class="form-error">Please enter a valid email.</span>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label for="fEventType">Event type</label>
+          <select id="fEventType" name="eventType" required>
+            <option value="">Select one</option>
+            <option>Wedding</option>
+            <option>Corporate Event</option>
+            <option>Birthday Celebration</option>
+            <option>Destination Wedding</option>
+            <option>Private Party</option>
+            <option>Engagement Event</option>
+          </select>
+          <span class="form-error">Please select an event type.</span>
+        </div>
+        <div class="form-field">
+          <label for="fDate">Preferred date</label>
+          <input type="date" id="fDate" name="date">
+        </div>
+      </div>
+      <div class="form-field">
+        <label for="fMessage">Tell us about your event</label>
+        <textarea id="fMessage" name="message" rows="4" required></textarea>
+        <span class="form-error">Please add a short message.</span>
+      </div>
+      <button type="submit" class="btn btn-solid magnetic">Send Enquiry</button>
+      <p class="form-success" id="formSuccess">Thank you — your enquiry has been received. We'll be in touch within one business day.</p>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="section-inner footer-grid">
+    <div class="footer-brand">
+      <a href="#home" class="nav-logo footer-logo"><span class="nav-logo-arch"></span>My&nbsp;Dream</a>
+      <p>A boutique event planning studio for clients who expect the extraordinary, wherever in the world they gather.</p>
+      <div class="footer-social">
+        <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.3"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.3"/><circle cx="17.3" cy="6.7" r="1" fill="currentColor"/></svg></a>
+        <a href="#" aria-label="Pinterest"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.3"/><path d="M9 17c1-3 1.3-5 1.3-6.4a2.7 2.7 0 015.3.5c0 2-1 4-2.9 4-1 0-1.6-.6-1.9-1.2" stroke="currentColor" stroke-width="1.2"/></svg></a>
+        <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.3"/><path d="M7 10v7M7 7v.01M11 17v-4.5a2.5 2.5 0 015 0V17" stroke="currentColor" stroke-width="1.3"/></svg></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>Navigate</h5>
+      <a href="#about">About</a><a href="#services">Services</a><a href="#gallery">Gallery</a><a href="#packages">Packages</a>
+    </div>
+    <div class="footer-col">
+      <h5>Services</h5>
+      <a href="#services">Wedding Planning</a><a href="#services">Corporate Events</a><a href="#services">Destination Weddings</a><a href="#services">Private Parties</a>
+    </div>
+    <div class="footer-newsletter">
+      <h5>Stay in the loop</h5>
+      <p>Occasional notes on new work and open dates. No noise.</p>
+      <form class="newsletter-form" id="newsletterForm">
+        <input type="email" placeholder="Your email address" required>
+        <button type="submit" aria-label="Subscribe">→</button>
+      </form>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 My Dream Events. All rights reserved.</span>
+    <span class="footer-legal"><a href="#">Privacy Policy</a><a href="#">Terms &amp; Conditions</a></span>
+  </div>
+</footer>
+
+<button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+  /* ---------- LOADER ---------- */
+  const loader = document.getElementById('loader');
+  window.addEventListener('load', () => {
+    setTimeout(() => loader.classList.add('is-hidden'), 1400);
+  });
+  // fallback in case load event already fired
+  setTimeout(() => loader.classList.add('is-hidden'), 2600);
+
+  /* ---------- SCROLL PROGRESS + STICKY NAV ---------- */
+  const nav = document.getElementById('siteNav');
+  const progress = document.getElementById('scrollProgress');
+  const backToTop = document.getElementById('backToTop');
+
+  function onScroll(){
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    progress.style.width = (docHeight > 0 ? (scrollTop / docHeight) * 100 : 0) + '%';
+    nav.classList.toggle('is-scrolled', scrollTop > 40);
+    backToTop.classList.toggle('is-visible', scrollTop > 600);
+  }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+
+  backToTop.addEventListener('click', () => window.scrollTo({ top:0, behavior:'smooth' }));
+
+  /* ---------- ACTIVE NAV LINK ---------- */
+  const navLinks = document.querySelectorAll('.nav-link');
+  const sections = [...navLinks].map(l => document.querySelector(l.getAttribute('href'))).filter(Boolean);
+  const navObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting){
+        const id = '#' + entry.target.id;
+        navLinks.forEach(l => l.classList.toggle('is-active', l.getAttribute('href') === id));
+      }
+    });
+  }, { rootMargin: '-45% 0px -50% 0px' });
+  sections.forEach(s => navObserver.observe(s));
+
+  /* ---------- MOBILE MENU ---------- */
+  const burger = document.getElementById('navBurger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  burger.addEventListener('click', () => {
+    const open = mobileMenu.classList.toggle('is-open');
+    burger.setAttribute('aria-expanded', open);
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    mobileMenu.classList.remove('is-open');
+    burger.setAttribute('aria-expanded', 'false');
+  }));
+
+  /* ---------- CUSTOM CURSOR ---------- */
+  if (window.matchMedia('(hover:hover) and (pointer:fine)').matches){
+    document.body.classList.add('cursor-ready');
+    const dot = document.getElementById('cursorDot');
+    const ring = document.getElementById('cursorRing');
+    let mx=0,my=0,rx=0,ry=0;
+    window.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; dot.style.left=mx+'px'; dot.style.top=my+'px'; });
+    (function loop(){ rx += (mx-rx)*0.18; ry += (my-ry)*0.18; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(loop); })();
+    document.querySelectorAll('a,button,.filter-btn').forEach(el => {
+      el.addEventListener('mouseenter', () => ring.classList.add('is-active'));
+      el.addEventListener('mouseleave', () => ring.classList.remove('is-active'));
+    });
+  }
+
+  /* ---------- MAGNETIC BUTTONS ---------- */
+  document.querySelectorAll('.magnetic').forEach(btn => {
+    btn.addEventListener('mousemove', e => {
+      const r = btn.getBoundingClientRect();
+      const x = e.clientX - r.left - r.width/2;
+      const y = e.clientY - r.top - r.height/2;
+      btn.style.transform = `translate(${x*0.18}px, ${y*0.35}px)`;
+    });
+    btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
+  });
+
+  /* ---------- SCROLL REVEAL ---------- */
+  const revealEls = document.querySelectorAll('.reveal-up, .reveal-scale');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting){
+        entry.target.classList.add('is-visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold:0.15 });
+  revealEls.forEach(el => revealObserver.observe(el));
+
+  /* ---------- ANIMATED COUNTERS ---------- */
+  const counters = document.querySelectorAll('.stat-num');
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting){
+        const el = entry.target;
+        const target = parseInt(el.dataset.count, 10);
+        const duration = 1600;
+        const start = performance.now();
+        function tick(now){
+          const p = Math.min((now-start)/duration, 1);
+          const eased = 1 - Math.pow(1-p, 3);
+          el.textContent = Math.round(eased*target);
+          if (p < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+        counterObserver.unobserve(el);
+      }
+    });
+  }, { threshold:0.5 });
+  counters.forEach(c => counterObserver.observe(c));
+
+  /* ---------- GALLERY FILTER ---------- */
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const masonryItems = document.querySelectorAll('.masonry-item');
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+      const filter = btn.dataset.filter;
+      masonryItems.forEach(item => {
+        const match = filter === 'all' || item.dataset.cat === filter;
+        item.classList.toggle('is-hidden', !match);
+      });
+    });
+  });
+
+  /* ---------- LIGHTBOX ---------- */
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const lightboxClose = document.getElementById('lightboxClose');
+  masonryItems.forEach(item => {
+    item.addEventListener('click', () => {
+      const src = item.querySelector('img').src;
+      lightboxImg.src = src;
+      lightboxImg.alt = item.querySelector('img').alt;
+      lightbox.classList.add('is-open');
+    });
+  });
+  function closeLightbox(){ lightbox.classList.remove('is-open'); }
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+  /* ---------- TESTIMONIAL SLIDER ---------- */
+  const track = document.getElementById('testimonialTrack');
+  const cards = track ? [...track.querySelectorAll('.testimonial-card')] : [];
+  const dotsWrap = document.getElementById('testimonialDots');
+  let current = 0, slideTimer;
+
+  cards.forEach((_, i) => {
+    const dot = document.createElement('button');
+    if (i === 0) dot.classList.add('is-active');
+    dot.addEventListener('click', () => showSlide(i));
+    dotsWrap.appendChild(dot);
+  });
+  const dots = dotsWrap ? [...dotsWrap.children] : [];
+
+  function showSlide(i){
+    cards[current].classList.remove('is-active');
+    dots[current].classList.remove('is-active');
+    current = i;
+    cards[current].classList.add('is-active');
+    dots[current].classList.add('is-active');
+  }
+  function nextSlide(){ showSlide((current+1) % cards.length); }
+  if (cards.length){
+    slideTimer = setInterval(nextSlide, 6000);
+  }
+
+  /* ---------- FAQ ACCORDION ---------- */
+  document.querySelectorAll('.accordion-item').forEach(item => {
+    const trigger = item.querySelector('.accordion-trigger');
+    const panel = item.querySelector('.accordion-panel');
+    trigger.addEventListener('click', () => {
+      const isOpen = item.classList.contains('is-open');
+      document.querySelectorAll('.accordion-item').forEach(other => {
+        other.classList.remove('is-open');
+        other.querySelector('.accordion-trigger').setAttribute('aria-expanded','false');
+        other.querySelector('.accordion-panel').style.maxHeight = null;
+      });
+      if (!isOpen){
+        item.classList.add('is-open');
+        trigger.setAttribute('aria-expanded','true');
+        panel.style.maxHeight = panel.scrollHeight + 'px';
+      }
+    });
+  });
+
+  /* ---------- CONTACT FORM VALIDATION ---------- */
+  const form = document.getElementById('contactForm');
+  const formSuccess = document.getElementById('formSuccess');
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    let valid = true;
+    const name = form.querySelector('#fName');
+    const email = form.querySelector('#fEmail');
+    const eventType = form.querySelector('#fEventType');
+    const message = form.querySelector('#fMessage');
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    [ [name, name.value.trim().length > 1],
+      [email, emailPattern.test(email.value.trim())],
+      [eventType, eventType.value !== ''],
+      [message, message.value.trim().length > 4] ].forEach(([field, ok]) => {
+        field.closest('.form-field').classList.toggle('has-error', !ok);
+        if (!ok) valid = false;
+      });
+
+    if (valid){
+      formSuccess.classList.add('is-visible');
+      form.reset();
+      setTimeout(() => formSuccess.classList.remove('is-visible'), 6000);
+    } else {
+      formSuccess.classList.remove('is-visible');
+    }
+  });
+
+  /* ---------- NEWSLETTER ---------- */
+  const newsletterForm = document.getElementById('newsletterForm');
+  newsletterForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const input = newsletterForm.querySelector('input');
+    input.placeholder = 'Thank you — subscribed!';
+    input.value = '';
+  });
+
+});
+
+</script>
+</body>
+</html>
